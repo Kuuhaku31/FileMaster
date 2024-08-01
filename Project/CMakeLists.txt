@@ -1,36 +1,40 @@
 
-cmake_minimum_required(VERSION 3.5.0)
+cmake_minimum_required(VERSION 3.5)
+project(filemaster
+    VERSION 0.0.1
+    DESCRIPTION "can read manga"
 
-# 设置项目名称
-project(MyProject)
+    # HOMEPAGE_URL ""
+    LANGUAGES CXX)
 
-# 设置TDM-GCC-64编译器路径
-set(CMAKE_C_COMPILER "E:/Microsoft VS Code/TDM-GCC-64/bin/gcc.exe")
-set(CMAKE_CXX_COMPILER "E:/Microsoft VS Code/TDM-GCC-64/bin/g++.exe")
+# 项目信息↑
 
+# 设置C++标准
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED True)
+
+# 设置生成的可执行文件的输出路径为bin目录
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 
 # 添加源文件
 # 查找并包含src目录下的全部源文件
 file(GLOB_RECURSE SRC_FILES src/*.cpp)
 
-# 添加头文件
-include_directories(./include)
-
-# 打印找到的源文件列表（可选）
+# 打印找到的源文件列表
 message(STATUS "Source files: ${SRC_FILES}")
 
 # 生成可执行文件
-add_executable(run ${SRC_FILES})
+add_executable(${PROJECT_NAME} ${SRC_FILES})
 
-# 忽略特定的编译器警告
-target_compile_options(run PRIVATE -Wno-conversion-null)
+# 添加头文件
+include_directories(./include)
 
-# 链接到 EasyX 图形库
-include_directories(./easyx)
-link_directories(./easyx)
-link_libraries(./EasyX/libeasyx.a)
+# 添加链接库
+target_link_libraries(${PROJECT_NAME} easyx)
 
-# 如果库文件名和路径正确，尝试直接指定库文件的完整路径
-target_link_libraries(run "${CMAKE_SOURCE_DIR}/easyx/libeasyx.a")
+# # 链接到 EasyX 图形库
+# include_directories(./easyx)
+# link_directories(./easyx)
+# link_libraries(./EasyX/libeasyx.a)
+
+# # 如果库文件名和路径正确，尝试直接指定库文件的完整路径
+# target_link_libraries(run "${CMAKE_SOURCE_DIR}/easyx/libeasyx.a")
